@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "815052043025",
-    "project_id": "test-19f6f",
-    "storage_bucket": "test-19f6f.appspot.com"
+    "project_number": "687437899316",
+    "project_id": "expense-tracker-5e8a8",
+    "storage_bucket": "expense-tracker-5e8a8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:815052043025:android:9cbb5900b91bb3df85d2b0",
+        "mobilesdk_app_id": "1:687437899316:android:6d93b20244eea070c68c61",
         "android_client_info": {
           "package_name": "com.example.expense_tracker"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "687437899316-n5rbhk0q458dmp3t3l7bmdf7usjikeq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.expense_tracker",
+            "certificate_hash": "2e25da2c6855d181b712f3d6fba2fe1d3a35b6a6"
+          }
+        },
+        {
+          "client_id": "687437899316-3tcp0kr4lt102mrfc8ijd4bgoj6evlsr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyARvVq4O_n9sHsN_j3S9SmNaZ0D7rNXnjI"
+          "current_key": "AIzaSyDb62DfvnQIXG4rXV-H4V2FCZ84v2UJyCM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687437899316-3tcp0kr4lt102mrfc8ijd4bgoj6evlsr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
