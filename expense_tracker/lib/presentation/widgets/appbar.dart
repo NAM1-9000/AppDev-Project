@@ -6,7 +6,7 @@ PreferredSize buildAppBar(String title, String text1, String text2) {
     child: AppBar(
       title: Text(title),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(150),
+        preferredSize: const Size.fromHeight(100),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -14,7 +14,8 @@ PreferredSize buildAppBar(String title, String text1, String text2) {
               text1,
               style: const TextStyle(fontSize: 30, color: Colors.white),
             ),
-            Text(text2, style: const TextStyle(fontSize: 30, color: Colors.white)),
+            Text(text2,
+                style: const TextStyle(fontSize: 30, color: Colors.white)),
           ],
         ),
       ),

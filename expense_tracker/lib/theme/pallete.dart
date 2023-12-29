@@ -22,8 +22,8 @@ class Pallete {
     ),
     primaryColor: redColor,
     colorScheme: ColorScheme(
-      brightness: Brightness.dark, // Changed to dark
-      primary: redColor,
+      brightness: Brightness.dark,
+      primary: blueColor,
       onPrimary: whiteColor,
       secondary: blueColor,
       onSecondary: whiteColor,
@@ -31,8 +31,8 @@ class Pallete {
       onError: whiteColor,
       background: drawerColor,
       onBackground: whiteColor,
-      surface: greyColor, // Changed to greyColor
-      onSurface: whiteColor, // Changed to whiteColor
+      surface: greyColor,
+      onSurface: whiteColor,
     ),
   );
 
@@ -52,14 +52,14 @@ class Pallete {
     primaryColor: redColor,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: redColor,
-      onPrimary: blackColor, // Changed to blackColor
+      primary: blueColor,
+      onPrimary: blackColor,
       secondary: blueColor,
-      onSecondary: blackColor, // Changed to blackColor
+      onSecondary: blackColor,
       error: Colors.red,
       onError: whiteColor,
       background: whiteColor,
-      onBackground: blackColor, // Changed to blackColor
+      onBackground: blackColor,
       surface: whiteColor,
       onSurface: blackColor,
     ),

@@ -1,5 +1,4 @@
-import 'package:expense_tracker/core/constants/constants.dart';
-import 'package:expense_tracker/features/auth/controller/auth_controller.dart';
+import 'package:expense_tracker/stuff/constants.dart';
 import 'package:expense_tracker/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,14 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SignInGoogle extends ConsumerWidget {
   const SignInGoogle({Key? key}) : super(key: key);
 
-  void signInWithGoogleWidget(BuildContext context, WidgetRef ref) {
-    ref.read(authControllerProvider.notifier).signInWithGoogle(context);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton.icon(
-      onPressed: () => signInWithGoogleWidget(context, ref),
+      onPressed: () => {},
       icon: Image.asset(
         Constants.googleLogoPath,
         width: 35,

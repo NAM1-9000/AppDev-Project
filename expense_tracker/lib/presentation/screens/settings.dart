@@ -19,22 +19,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           DateFormat('EEEE, d MMMM').format(DateTime.now()), '42000', '69420'),
       body: ListView(
         children: [
-          ListTile(
-            title: const Text('Notification Settings'),
-            subtitle: const Text('Manage notification preferences'),
-            trailing: const Icon(Icons.arrow_forward),
-            onTap: () {
-              // Add navigation logic or settings change logic here
-              print('Notification Settings tapped');
-            },
-          ),
           const Divider(),
           ListTile(
             title: const Text('Account Settings'),
             subtitle: const Text('Manage your account details'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Account Settings tapped');
             },
           ),
@@ -44,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Customize the app theme'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
+              Navigator.pushNamed(context, '/appearance');
               print('Appearance tapped');
             },
           ),
@@ -54,7 +44,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Manage privacy settings'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Privacy tapped');
             },
           ),
@@ -64,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Learn more about the app'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/about');
+              Navigator.pushNamed(context, '/about');
               print('About tapped');
             },
           ),

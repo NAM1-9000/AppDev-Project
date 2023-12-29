@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:expense_tracker/models/entry_model.dart';
+import 'package:expense_tracker/data/models/entry_model.dart';
 
 class UserModel {
   final String email;

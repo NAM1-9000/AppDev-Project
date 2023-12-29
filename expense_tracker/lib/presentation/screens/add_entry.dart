@@ -1,6 +1,6 @@
-import 'package:expense_tracker/models/entry_model.dart';
+import 'package:expense_tracker/data/models/entry_model.dart';
 import 'package:expense_tracker/presentation/widgets/form_field.dart';
-import 'package:expense_tracker/providers/database_services.dart';
+import 'package:expense_tracker/stuff/database_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

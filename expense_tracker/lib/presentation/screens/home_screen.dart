@@ -1,8 +1,8 @@
-import 'package:expense_tracker/models/entry_model.dart';
+import 'package:expense_tracker/data/models/entry_model.dart';
 import 'package:expense_tracker/presentation/widgets/appbar.dart';
 import 'package:expense_tracker/presentation/widgets/form_field.dart';
 import 'package:expense_tracker/presentation/widgets/naviagtion_menu.dart';
-import 'package:expense_tracker/providers/database_services.dart';
+import 'package:expense_tracker/stuff/database_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,69 +26,71 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: true,
       appBar: buildAppBar(
           DateFormat('EEEE, d MMMM').format(DateTime.now()), '42000', '69420'),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Recent Expenses"),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Upcoming Payments"),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.68,
-            width: MediaQuery.sizeOf(context).width,
-            child: StreamBuilder(
-                stream: _databaseService.getEntries(),
-                builder: (context, snapshot) {
-                  List entries = snapshot.data?.docs ?? [];
-                  entries.sort((a, b) => b['date'].compareTo(a['date']));
-                  if (entries.isEmpty) {
-                    return const Center(child: Text("No entries yet"));
-                  }
-                  return ListView.builder(
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) {
-                        EntryModel entry = entries[index].data();
-                        String entryid = entries[index].id;
-                        return ListTile(
-                          onTap: () {
-                            _titleController.text = entry.title;
-                            _amountController.text = entry.amount.toString();
-                            _notesController.text = entry.notes;
-                            _selectedCategory = entry.category;
-                            showEntryModalBottomSheet(
-                                context,
-                                _titleController,
-                                _amountController,
-                                _notesController,
-                                _selectedCategory,
-                                entry,
-                                entryid);
-                          },
-                          title: Text(entry.title),
-                          subtitle: Text(entry.category),
-                          trailing: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Rs.${entry.amount.toString()}'),
-                              Text(DateFormat.yMMMd()
-                                  .add_Hm()
-                                  .format(entry.date)),
-                            ],
-                          ),
-                        );
-                      });
-                }),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Recent Expenses"),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Upcoming Payments"),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.68,
+              width: MediaQuery.sizeOf(context).width,
+              child: StreamBuilder(
+                  stream: _databaseService.getEntries(),
+                  builder: (context, snapshot) {
+                    List entries = snapshot.data?.docs ?? [];
+                    entries.sort((a, b) => b['date'].compareTo(a['date']));
+                    if (entries.isEmpty) {
+                      return const Center(child: Text("No entries yet"));
+                    }
+                    return ListView.builder(
+                        itemCount: entries.length,
+                        itemBuilder: (context, index) {
+                          EntryModel entry = entries[index].data();
+                          String entryid = entries[index].id;
+                          return ListTile(
+                            onTap: () {
+                              _titleController.text = entry.title;
+                              _amountController.text = entry.amount.toString();
+                              _notesController.text = entry.notes;
+                              _selectedCategory = entry.category;
+                              showEntryModalBottomSheet(
+                                  context,
+                                  _titleController,
+                                  _amountController,
+                                  _notesController,
+                                  _selectedCategory,
+                                  entry,
+                                  entryid);
+                            },
+                            title: Text(entry.title),
+                            subtitle: Text(entry.category),
+                            trailing: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Rs.${entry.amount.toString()}'),
+                                Text(DateFormat.yMMMd()
+                                    .add_Hm()
+                                    .format(entry.date)),
+                              ],
+                            ),
+                          );
+                        });
+                  }),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: SizedBox(
         height: 50.0,
@@ -202,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ElevatedButton(
                         onPressed: () => {
                               _databaseService.deleteEntry(entryid),
-                              Navigator.pushNamed(context, '/home')
+                              Navigator.pushReplacementNamed(context, '/home')
                             },
                         child: const Text("Delete")),
                     ElevatedButton(

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_tracker/models/entry_model.dart';
-import 'package:expense_tracker/models/user_model.dart';
+import 'package:expense_tracker/data/models/entry_model.dart';
+import 'package:expense_tracker/data/models/user_model.dart';
 
 const String USER_COLLECTION_REF = 'users';
 const String ENTRY_COLLECTION_REF = 'entries';
