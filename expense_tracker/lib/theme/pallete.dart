@@ -21,7 +21,19 @@ class Pallete {
       backgroundColor: drawerColor,
     ),
     primaryColor: redColor,
-    backgroundColor: drawerColor,
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark,
+      primary: blueColor,
+      onPrimary: whiteColor,
+      secondary: blueColor,
+      onSecondary: whiteColor,
+      error: Colors.red,
+      onError: whiteColor,
+      background: drawerColor,
+      onBackground: whiteColor,
+      surface: greyColor,
+      onSurface: whiteColor,
+    ),
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
@@ -38,6 +50,18 @@ class Pallete {
       backgroundColor: whiteColor,
     ),
     primaryColor: redColor,
-    backgroundColor: whiteColor,
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: blueColor,
+      onPrimary: blackColor,
+      secondary: blueColor,
+      onSecondary: blackColor,
+      error: Colors.red,
+      onError: whiteColor,
+      background: whiteColor,
+      onBackground: blackColor,
+      surface: whiteColor,
+      onSurface: blackColor,
+    ),
   );
 }

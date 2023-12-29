@@ -22,13 +22,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
         });
         switch (index) {
           case 0:
-            Navigator.pushNamed(context, '/analytics');
+            Navigator.pushReplacementNamed(context, '/analytics');
             break;
           case 1:
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/home');
             break;
           case 2:
-            Navigator.pushNamed(context, '/settings');
+            Navigator.pushReplacementNamed(context, '/settings');
             break;
         }
       },
