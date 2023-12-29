@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Learn more about the app'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.pushNamed(context, '/about');
+              Navigator.pushReplacementNamed(context, '/about');
               print('About tapped');
             },
           ),
@@ -75,7 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               FirebaseAuth.instance.signOut();
-              Navigator.pushNamed(context, '/login');
+              Navigator.pushReplacementNamed(context, '/login');
               print('Sign Out tapped');
             },
           ),

@@ -49,7 +49,7 @@ class UserModel {
       monthlyBudget: map['monthlyBudget'] as double,
       monthlySpending: map['monthlySpending'] as double,
       entries: List<EntryModel>.from(
-        (map['entries'] as List<int>).map<EntryModel>(
+        (map['entries'] as List<EntryModel>).map<EntryModel>(
           (x) => EntryModel.fromMap(x as Map<String, dynamic>),
         ),
       ),

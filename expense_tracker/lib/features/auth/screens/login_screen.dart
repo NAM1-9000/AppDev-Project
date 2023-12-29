@@ -36,76 +36,78 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Constants.logoPath,
-                    height: 200,
-                    width: 200,
-                  ),
-                  Text('Expense Tracker',
-                      style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FormFieldWidget(
-                    controller: _emailController,
-                    hintText: 'Email',
-                    labelText: 'Email',
-                    inputType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FormFieldWidget(
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    labelText: 'Password',
-                    isPasswordField: true,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.greyColor,
-                        minimumSize: Size(double.infinity,
-                            MediaQuery.of(context).size.height * 0.06),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    onPressed: () {
-                      final email = _emailController.text;
-                      final password = _passwordController.text;
-                      ref
-                          .read(authControllerProvider.notifier)
-                          .signInWithEmailAndPassword(context, email, password);
-                    },
-                    child: const Text('Login'),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.greyColor,
-                        minimumSize: Size(double.infinity,
-                            MediaQuery.of(context).size.height * 0.06),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/signup');
-                    },
-                    child: const Text('Sign Up'),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SignInGoogle()
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Constants.logoPath,
+                      height: 200,
+                      width: 200,
+                    ),
+                    Text('Expense Tracker',
+                        style: Theme.of(context).textTheme.titleLarge),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FormFieldWidget(
+                      controller: _emailController,
+                      hintText: 'Email',
+                      labelText: 'Email',
+                      inputType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FormFieldWidget(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                      labelText: 'Password',
+                      isPasswordField: true,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Pallete.greyColor,
+                          minimumSize: Size(double.infinity,
+                              MediaQuery.of(context).size.height * 0.06),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      onPressed: () {
+                        final email = _emailController.text;
+                        final password = _passwordController.text;
+                        ref
+                            .read(authControllerProvider.notifier)
+                            .signInWithEmailAndPassword(
+                                context, email, password);
+                      },
+                      child: const Text('Login'),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Pallete.greyColor,
+                          minimumSize: Size(double.infinity,
+                              MediaQuery.of(context).size.height * 0.06),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/signup');
+                      },
+                      child: const Text('Sign Up'),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const SignInGoogle()
+                  ],
+                ),
               ),
             ),
     );
-    ;
   }
 }
