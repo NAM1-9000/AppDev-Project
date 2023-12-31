@@ -25,7 +25,11 @@ class _HomeBodyState extends State<HomeBody> {
     // });
   }
 
-  void _openEntryDialog(String userEmail) {
+  void _openEntryDialog(
+      String userEmail,
+      TextEditingController titleController,
+      TextEditingController categoryController,
+      TextEditingController amountController) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -35,21 +39,21 @@ class _HomeBodyState extends State<HomeBody> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  controller: titleEditingController,
+                  controller: titleController,
                   decoration: const InputDecoration(
                     hintText: 'Title',
                     labelText: 'Title',
                   ),
                 ),
                 TextField(
-                  controller: categoryEditingController,
+                  controller: categoryController,
                   decoration: const InputDecoration(
                     hintText: 'Category',
                     labelText: 'Category',
                   ),
                 ),
                 TextField(
-                  controller: amountEditingController,
+                  controller: amountController,
                   decoration: const InputDecoration(
                     hintText: 'Amount',
                     labelText: 'Amount',
@@ -151,7 +155,15 @@ class _HomeBodyState extends State<HomeBody> {
 
                       return InkWell(
                         onTap: () {
-                          _openEntryDialog(userEmail);
+                          titleEditingController.text = userEntry.title;
+                          categoryEditingController.text = userEntry.category;
+                          amountEditingController.text =
+                              userEntry.amount.toString();
+                          _openEntryDialog(
+                              userEmail,
+                              titleEditingController,
+                              categoryEditingController,
+                              amountEditingController);
                         },
                         child: EntryTile(
                           title: userEntry.title,

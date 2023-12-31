@@ -6,19 +6,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddEntryScreen extends StatefulWidget {
   const AddEntryScreen({super.key});
+
+  @override
   State<AddEntryScreen> createState() => _AddEntryScreenState();
 }
 
 class _AddEntryScreenState extends State<AddEntryScreen> {
-  @override
+  // controllers
+  TextEditingController titleController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
+  String _selectedCategory = "Grocery";
+
   @override
   Widget build(BuildContext context) {
-    // controllers
-    TextEditingController titleController = TextEditingController();
-    TextEditingController categoryController = TextEditingController();
-    TextEditingController amountController = TextEditingController();
-
-    String _selectedCategory = "Grocery";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">18</td>
-            <td class="headerCovTableEntry">34</td>
-            <td class="headerCovTableEntryLo">52.9 %</td>
+            <td class="headerCovTableEntry">35</td>
+            <td class="headerCovTableEntryLo">51.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Sat Dec 30 16:37:37 2023</td>
+            <td class="headerValue">Mon Jan  1 02:02:06 2024</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -151,23 +151,24 @@
 <a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :                       return AuthScreensButton(</span></a>
 <a name="90"><span class="lineNum">      90 </span>            :                         buttonLabel: 'Sign Up',</a>
 <a name="91"><span class="lineNum">      91 </span><span class="lineNoCov">          0 :                         onPressed: () {</span></a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineNoCov">          0 :                           context.read&lt;AuthCubit&gt;().emailPasswordSignUp(</span></a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 :                                 emailController.text,</span></a>
-<a name="94"><span class="lineNum">      94 </span><span class="lineNoCov">          0 :                                 passwordController.text,</span></a>
-<a name="95"><span class="lineNum">      95 </span>            :                               );</a>
-<a name="96"><span class="lineNum">      96 </span>            :                         },</a>
-<a name="97"><span class="lineNum">      97 </span>            :                       );</a>
-<a name="98"><span class="lineNum">      98 </span>            :                     }</a>
-<a name="99"><span class="lineNum">      99 </span>            :                   },</a>
-<a name="100"><span class="lineNum">     100 </span>            :                 ),</a>
-<a name="101"><span class="lineNum">     101 </span>            :               ],</a>
-<a name="102"><span class="lineNum">     102 </span>            :             ),</a>
-<a name="103"><span class="lineNum">     103 </span>            :           ),</a>
-<a name="104"><span class="lineNum">     104 </span>            :         ),</a>
-<a name="105"><span class="lineNum">     105 </span>            :       ),</a>
-<a name="106"><span class="lineNum">     106 </span>            :     );</a>
-<a name="107"><span class="lineNum">     107 </span>            :   }</a>
-<a name="108"><span class="lineNum">     108 </span>            : }</a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineNoCov">          0 :                           FocusScope.of(context).unfocus();</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 :                           context.read&lt;AuthCubit&gt;().emailPasswordSignUp(</span></a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineNoCov">          0 :                                 emailController.text,</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineNoCov">          0 :                                 passwordController.text,</span></a>
+<a name="96"><span class="lineNum">      96 </span>            :                               );</a>
+<a name="97"><span class="lineNum">      97 </span>            :                         },</a>
+<a name="98"><span class="lineNum">      98 </span>            :                       );</a>
+<a name="99"><span class="lineNum">      99 </span>            :                     }</a>
+<a name="100"><span class="lineNum">     100 </span>            :                   },</a>
+<a name="101"><span class="lineNum">     101 </span>            :                 ),</a>
+<a name="102"><span class="lineNum">     102 </span>            :               ],</a>
+<a name="103"><span class="lineNum">     103 </span>            :             ),</a>
+<a name="104"><span class="lineNum">     104 </span>            :           ),</a>
+<a name="105"><span class="lineNum">     105 </span>            :         ),</a>
+<a name="106"><span class="lineNum">     106 </span>            :       ),</a>
+<a name="107"><span class="lineNum">     107 </span>            :     );</a>
+<a name="108"><span class="lineNum">     108 </span>            :   }</a>
+<a name="109"><span class="lineNum">     109 </span>            : }</a>
 </pre>
       </td>
     </tr>

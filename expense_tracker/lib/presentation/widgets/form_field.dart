@@ -13,26 +13,27 @@ class FormFieldWidget extends StatefulWidget {
   final TextInputType? inputType;
   final int? numberOfLines;
 
-  const FormFieldWidget(
-      {super.key,
-      this.controller,
-      this.isPasswordField,
-      this.fieldKey,
-      this.hintText,
-      this.labelText,
-      this.helperText,
-      this.onSaved,
-      this.validator,
-      this.onFieldSubmitted,
-      this.inputType,
-      this.numberOfLines}); // add this line
+  const FormFieldWidget({
+    Key? key,
+    this.controller,
+    this.isPasswordField,
+    this.fieldKey,
+    this.hintText,
+    this.labelText,
+    this.helperText,
+    this.onSaved,
+    this.validator,
+    this.onFieldSubmitted,
+    this.inputType,
+    this.numberOfLines,
+  }) : super(key: key);
 
   @override
   _FormFieldWidgetState createState() => _FormFieldWidgetState();
 }
 
 class _FormFieldWidgetState extends State<FormFieldWidget> {
-  final bool _obscureText = true;
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,22 +44,42 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
         color: Colors.grey.withOpacity(.35),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextFormField(
-        minLines: widget.isPasswordField == true ? null : widget.numberOfLines,
-        maxLines: widget.isPasswordField == true ? 1 : widget.numberOfLines,
-        //style: const TextStyle(color: Colors.black),
-        controller: widget.controller,
-        keyboardType: widget.inputType,
-        key: widget.fieldKey,
-        obscureText: widget.isPasswordField == true ? _obscureText : false,
-        onSaved: widget.onSaved,
-        validator: widget.validator,
-        onFieldSubmitted: widget.onFieldSubmitted,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          filled: true,
-          hintText: widget.hintText,
-        ),
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          TextFormField(
+            minLines:
+                widget.isPasswordField == true ? null : widget.numberOfLines,
+            maxLines: widget.isPasswordField == true ? 1 : widget.numberOfLines,
+            controller: widget.controller,
+            keyboardType: widget.inputType,
+            key: widget.fieldKey,
+            obscureText: widget.isPasswordField == true ? _obscureText : false,
+            onSaved: widget.onSaved,
+            validator: widget.validator,
+            onFieldSubmitted: widget.onFieldSubmitted,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              filled: true,
+              hintText: widget.hintText,
+            ),
+          ),
+          if (widget.isPasswordField == true)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

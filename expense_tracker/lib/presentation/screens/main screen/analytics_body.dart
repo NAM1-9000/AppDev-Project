@@ -22,7 +22,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
   late UserModel _authenticatedUser;
   late List<EntryModel> _userEntries;
 
-  //get data from firestore
+  //get moc from firestore
   List<EntryModel> getChartData() {
     final List<EntryModel> chartData = [
       EntryModel(
@@ -112,7 +112,8 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
               processedData = processData(_chartData!);
 
               return SfCircularChart(
-                legend: Legend(isVisible: true),
+                legend: Legend(
+                    isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
                 title: ChartTitle(
                   text: 'Expenses By Category',
                 ),
