@@ -14,6 +14,8 @@ class AddEntryScreen extends StatelessWidget {
     TextEditingController titleController = TextEditingController();
     TextEditingController categoryController = TextEditingController();
     TextEditingController amountController = TextEditingController();
+
+    String _selectedCategory = "Grocery";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -40,7 +42,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.text,
                   controller: titleController,
                 ),
-                Divider(),
+                SizedBox(height: 10),
                 // category
                 FormFieldWidget(
                   hintText: 'Category',
@@ -48,7 +50,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.text,
                   controller: categoryController,
                 ),
-                Divider(),
+                SizedBox(height: 10),
                 // amount
                 FormFieldWidget(
                   hintText: 'Amount',
@@ -56,7 +58,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.number,
                   controller: amountController,
                 ),
-                Divider(),
+                SizedBox(height: 10),
                 // add button
                 ElevatedButton(
                   onPressed: () {

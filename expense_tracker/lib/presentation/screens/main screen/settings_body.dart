@@ -33,7 +33,9 @@ class SettingsBody extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Divider(),
+            const Divider(
+              color: Colors.transparent,
+            ),
             ListTile(
               title: const Text('Dark Mode'),
               subtitle: const Text('Enable dark mode'),
@@ -51,14 +53,18 @@ class SettingsBody extends StatelessWidget {
                 print('Dark Mode tapped');
               },
             ),
-            Divider(),
+            const Divider(
+              color: Colors.transparent,
+            ),
             ListTile(
               title: const Text('Set Monthly Budget'),
               subtitle: const Text('Set your monthly budget'),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () {},
             ),
-            Divider(),
+            const Divider(
+              color: Colors.transparent,
+            ),
             // about list tile
             ListTile(
               title: const Text('About'),
@@ -68,7 +74,9 @@ class SettingsBody extends StatelessWidget {
                 Navigator.pushNamed(context, '/about');
               },
             ),
-            Divider(),
+            const Divider(
+              color: Colors.transparent,
+            ),
             // logout list tile
             ListTile(
               title: const Text('Sign Out'),

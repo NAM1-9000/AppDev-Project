@@ -50,6 +50,7 @@ dependencies:
   bloc: ^8.1.2
   mockito: ^5.4.4
   golden_toolkit: ^0.15.0
+  syncfusion_flutter_charts: ^21.2.4
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,11 @@ flutter:
   assets:
     - assets/logo.png
     - assets/google.png
+    # - assets/Food.jpeg
+    # - assets/Bill.jpeg
+    # - assets/Grocery.jpeg
+    # - assets/Transfer.jpeg
+    # - assets/Clothes.jpeg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

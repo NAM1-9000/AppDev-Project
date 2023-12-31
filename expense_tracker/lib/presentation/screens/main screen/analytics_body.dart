@@ -1,9 +1,7 @@
-import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
-import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/data/models/entry_model.dart';
+import 'package:expense_tracker/data/models/pie_chart_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:fl_chart/fl_chart.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AnalyticsBody extends StatefulWidget {
   const AnalyticsBody({Key? key}) : super(key: key);
@@ -13,66 +11,90 @@ class AnalyticsBody extends StatefulWidget {
 }
 
 class _AnalyticsBodyState extends State<AnalyticsBody> {
-  late List<EntryModel> entries;
+  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+
+  late List<EntryModel> _chartData;
+
+  //get data from firestore
+  List<EntryModel> getChartData() {
+    final List<EntryModel> chartData = [
+      EntryModel(
+          title: 'owinowec',
+          amount: 1000,
+          date: DateTime.now(),
+          category: 'Food'),
+      EntryModel(
+          title: 'owinowec',
+          amount: 2340,
+          date: DateTime.now(),
+          category: 'Groceries'),
+      EntryModel(
+          title: 'owinowec',
+          amount: 987,
+          date: DateTime.now(),
+          category: 'Clothes'),
+      EntryModel(
+          title: 'owinowec',
+          amount: 465,
+          date: DateTime.now(),
+          category: 'Food'),
+      EntryModel(
+          title: 'owinowec',
+          amount: 412,
+          date: DateTime.now(),
+          category: 'Bills'),
+      EntryModel(
+          title: 'owinowec',
+          amount: 894,
+          date: DateTime.now(),
+          category: 'Food'),
+    ];
+    return chartData;
+  }
+
+  // group into categories, and convert into PieChartData
+  List<PieChartData> processData(List<EntryModel> data) {
+    Map<String, double> categoryMap = {};
+
+    for (EntryModel entry in data) {
+      if (categoryMap.containsKey(entry.category)) {
+        categoryMap[entry.category] =
+            (categoryMap[entry.category] ?? 0) + entry.amount;
+      } else {
+        categoryMap[entry.category] = entry.amount;
+      }
+    }
+    List<PieChartData> processedData = categoryMap.entries
+        .map((entry) => PieChartData(category: entry.key, amount: entry.value))
+        .toList();
+
+    return processedData;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('analytics'));
-    //BlocBuilder<AuthCubit, AuthState>(
-    //     builder: (context, state) {
-    //       if (state is AuthSuccess) {
-    //         return BlocConsumer<AddEntryCubit, AddEntryState>(
-    //           listener: (context, state) {},
-    //           builder: (context, state) {
-    //             if (state is AddEntrySuccess) {
-    //               entries = state.userModel.entries;
-    //             }
+    List<EntryModel> rawData = getChartData();
+    List<PieChartData> processedData = processData(rawData);
 
-    //             return _buildPieChart(entries);
-    //           },
-    //         );
-    //       } else {
-    //         return const CircularProgressIndicator();
-    //       }
-    //     },
-    //   );
-    // }
-
-    // Widget _buildPieChart(List<EntryModel> entries) {
-    //   Map<String, double> categoryMap = {};
-
-    //   // Calculate total amount for each category
-    //   for (EntryModel entry in entries) {
-    //     if (categoryMap.containsKey(entry.category)) {
-    //       categoryMap[entry.category]! += entry.amount;
-    //     } else {
-    //       categoryMap[entry.category] = entry.amount;
-    //     }
-    //   }
-
-    //   // Convert data for pie chart
-    //   List<PieChartSectionData> sections = [];
-    //   int index = 0;
-    //   categoryMap.forEach((category, amount) {
-    //     sections.add(
-    //       PieChartSectionData(
-    //         color: FlColors[index % FlColors.length],
-    //         value: amount,
-    //         title: '$category\n${amount.toStringAsFixed(2)}',
-    //         radius: 50,
-    //       ),
-    //     );
-    //     index++;
-    //   });
-
-    //   return Center(
-    //     child: PieChart(
-    //       PieChartData(
-    //         sectionsSpace: 0,
-    //         centerSpaceRadius: 40,
-    //         sections: sections,
-    //       ),
-    //     ),
-    //   );
+    return SafeArea(
+      child: Scaffold(
+        body: SfCircularChart(
+          legend: Legend(isVisible: true),
+          title: ChartTitle(
+            text: 'Expenses By Category',
+          ),
+          tooltipBehavior: _tooltipBehavior,
+          series: [
+            PieSeries<PieChartData, String>(
+              dataSource: processedData,
+              xValueMapper: (PieChartData data, _) => data.category,
+              yValueMapper: (PieChartData data, _) => data.amount,
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+              enableTooltip: true,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

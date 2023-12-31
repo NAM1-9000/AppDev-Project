@@ -18,15 +18,18 @@ class EntryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(title),
-        subtitle: Text('Category: $category'),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Rs. $amount'),
-            Text('${date.day}/${date.month}/${date.year}'),
-          ],
-        ),
+        title: Text(title, style: const TextStyle(fontSize: 18)),
+        subtitle: Text('$category',
+            style: const TextStyle(
+              fontSize: 11,
+              fontFamily: 'Roboto',
+            )),
+        trailing: Text('Rs.$amount',
+            style: const TextStyle(
+              fontSize: 14,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+            )),
       ),
     );
   }

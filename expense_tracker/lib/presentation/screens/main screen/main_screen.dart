@@ -2,6 +2,7 @@ import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/analytics_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/home_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/settings_body.dart';
+import 'package:expense_tracker/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -24,10 +25,11 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(formattedDate),
+        // backgroundColor: Colors.amber,
+        title: Text(formattedDate, style: const TextStyle(fontSize: 25)),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
+          preferredSize: const Size.fromHeight(120),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Container(
@@ -35,58 +37,135 @@ class _MainScreenState extends State<MainScreen> {
                 borderRadius: BorderRadius.circular(5),
                 //color: const Color.fromARGB(255, 48, 48, 48),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Column(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Monthly Budget'),
-                        BlocBuilder<AuthCubit, AuthState>(
-                          builder: (context, state) {
-                            if (state is AuthSuccess) {
-                              return Text(
-                                "Rs. ${state.userModel.monthlyBudget.toString()}",
-                                style: const TextStyle(fontSize: 20),
-                              );
-                            } else {
-                              return const Text(
-                                'Loading...',
-                                style: TextStyle(fontSize: 20),
-                              );
-                            }
-                          },
+                    Container(
+                      width: 180,
+                      height: 120,
+                      child: Card(
+                        color: Colors.greenAccent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Spending',
+                                    style: const TextStyle(fontSize: 18)),
+                                SizedBox(height: 10),
+                                // monthly spending
+                                BlocBuilder<AuthCubit, AuthState>(
+                                  builder: (context, state) {
+                                    if (state is AuthSuccess) {
+                                      return Text(
+                                        "Rs.${state.userModel.monthlySpending.toString()}",
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'Loading...',
+                                        style: TextStyle(fontSize: 20),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Monthly Spending'),
-                        // monthly spending
-                        BlocBuilder<AuthCubit, AuthState>(
-                          builder: (context, state) {
-                            if (state is AuthSuccess) {
-                              return Text(
-                                "Rs. ${state.userModel.monthlySpending.toString()}",
-                                style: const TextStyle(fontSize: 20),
-                              );
-                            } else {
-                              return const Text(
-                                'Loading...',
-                                style: TextStyle(fontSize: 20),
-                              );
-                            }
-                          },
+                    Container(
+                      width: 180,
+                      height: 120,
+                      child: Card(
+                        color: Colors.redAccent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Budget',
+                                    style: const TextStyle(fontSize: 18)),
+                                SizedBox(height: 10),
+                                BlocBuilder<AuthCubit, AuthState>(
+                                  builder: (context, state) {
+                                    if (state is AuthSuccess) {
+                                      return Text(
+                                        "Rs.${state.userModel.monthlyBudget.toString()}",
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                        ),
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'Loading...',
+                                        style: TextStyle(fontSize: 20),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
+                  ]),
+
+              // child: Column(
+              //   children: [
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Text('Monthly Budget',
+              //             style: const TextStyle(fontSize: 20)),
+              //         BlocBuilder<AuthCubit, AuthState>(
+              //           builder: (context, state) {
+              //             if (state is AuthSuccess) {
+              //               return Text(
+              //                 "Rs. ${state.userModel.monthlyBudget.toString()}",
+              //                 style: const TextStyle(fontSize: 20),
+              //               );
+              //             } else {
+              //               return const Text(
+              //                 'Loading...',
+              //                 style: TextStyle(fontSize: 20),
+              //               );
+              //             }
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: [
+              //         Text('Monthly Spending',
+              //             style: const TextStyle(fontSize: 20)),
+              //         // monthly spending
+              //         BlocBuilder<AuthCubit, AuthState>(
+              //           builder: (context, state) {
+              //             if (state is AuthSuccess) {
+              //               return Text(
+              //                 "Rs. ${state.userModel.monthlySpending.toString()}",
+              //                 style: const TextStyle(fontSize: 20),
+              //               );
+              //             } else {
+              //               return const Text(
+              //                 'Loading...',
+              //                 style: TextStyle(fontSize: 20),
+              //               );
+              //             }
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
             ),
           ),
         ),
@@ -103,7 +182,8 @@ class _MainScreenState extends State<MainScreen> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        backgroundColor: Pallete.blueColor,
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
         onPressed: () {
           Navigator.pushReplacementNamed(context, '/add_entry');
         },
@@ -119,7 +199,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
+            icon: Icon(Icons.auto_graph),
             label: 'Analytics',
           ),
           BottomNavigationBarItem(

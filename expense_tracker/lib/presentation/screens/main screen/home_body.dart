@@ -129,35 +129,38 @@ class _HomeBodyState extends State<HomeBody> {
 
               updatedUserEntres = entries;
 
-              return ListView.builder(
-                itemCount: entries.length,
-                itemBuilder: (context, index) {
-                  if (updatedUserEntres != null) {
-                    return InkWell(
-                      onTap: () {
-                        _openEntryDialog(userEmail);
-                      },
-                      child: EntryTile(
-                        title: updatedUserEntres[index].title,
-                        category: updatedUserEntres[index].category,
-                        amount: updatedUserEntres[index].amount,
-                        date: updatedUserEntres[index].date,
-                      ),
-                    );
-                  } else {
-                    return EntryTile(
-                      title: entries[index].title,
-                      category: entries[index].category,
-                      amount: entries[index].amount,
-                      date: entries[index].date,
-                    );
-                  }
-                },
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: entries.length,
+                  itemBuilder: (context, index) {
+                    if (updatedUserEntres != null) {
+                      return InkWell(
+                        onTap: () {
+                          _openEntryDialog(userEmail);
+                        },
+                        child: EntryTile(
+                          title: updatedUserEntres[index].title,
+                          category: updatedUserEntres[index].category,
+                          amount: updatedUserEntres[index].amount,
+                          date: updatedUserEntres[index].date,
+                        ),
+                      );
+                    } else {
+                      return EntryTile(
+                        title: entries[index].title,
+                        category: entries[index].category,
+                        amount: entries[index].amount,
+                        date: entries[index].date,
+                      );
+                    }
+                  },
+                ),
               );
             },
           );
         } else {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
