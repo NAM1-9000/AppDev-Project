@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class EntryModel {
   String title;
   double amount;
@@ -42,7 +40,7 @@ class EntryModel {
     return EntryModel(
       title: map['title'] as String,
       amount: (map['amount'] as num).toDouble(),
-      date: (map['date'] as Timestamp).toDate(),
+      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
       category: map['category'] as String,
     );
   }

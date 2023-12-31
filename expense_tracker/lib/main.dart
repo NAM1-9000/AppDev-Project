@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/presentation/screens/about_screen.dart';
+import 'package:expense_tracker/presentation/screens/add_entry_screen.dart';
 import 'package:expense_tracker/presentation/screens/login_screen.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/main_screen.dart';
 import 'package:expense_tracker/presentation/screens/settings_screen.dart';
@@ -32,21 +34,23 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
+        BlocProvider(create: (_) => AddEntryCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Expense Tracker',
-        theme: Pallete.lightModeAppTheme,
-        initialRoute: '/login',
+        theme: Pallete.darkModeAppTheme,
+        initialRoute: '/splash',
         routes: {
           '/splash': (context) => const SplashScreen(),
           '/main': (context) => const MainScreen(),
           '/login': (context) => const LoginScreen(),
           '/signup': (context) => const SignupScreen(),
-          // '/add_entry': (context) => const AddEntryScreen(),
-          '/analytics': (context) => const AnalyticsScreen(),
+          '/add_entry': (context) => const AddEntryScreen(),
+          //'/analytics': (context) => const AnalyticsScreen(),
           '/settings': (context) => const SettingsScreen(),
           '/about': (context) => const AboutScreen(),
+          //syncfusion
         },
       ),
     );

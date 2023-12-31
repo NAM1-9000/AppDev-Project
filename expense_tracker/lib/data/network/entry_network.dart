@@ -3,64 +3,136 @@ import 'package:expense_tracker/data/models/entry_model.dart';
 import 'package:expense_tracker/data/models/user_model.dart';
 
 class EntryNetwork {
-  Future<List<EntryModel>> getEntries(String userId) async {
-    try {
-      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-      if (userDoc.exists) {
-        final UserModel user =
-            UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
-        return user.entries;
-      } else {
-        return [];
+  Future<UserModel?> addEntry(
+      String userEmail, String title, String category, double amount) async {
+    try {
+      EntryModel entryModel = EntryModel(
+        title: title,
+        category: category,
+        amount: amount,
+        date: DateTime.now(),
+      );
+
+      DocumentSnapshot userSnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: userEmail)
+          .limit(1)
+          .get()
+          .then((querySnapshot) => querySnapshot.docs.first);
+
+      if (userSnapshot.exists) {
+        UserModel user =
+            UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+
+        List<EntryModel> userEntres = user.entries;
+
+        userEntres.add(entryModel);
+
+        user = user.copyWith(entries: userEntres);
+
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('users')
+            .where('email', isEqualTo: userEmail)
+            .limit(1)
+            .get();
+
+        String userId = querySnapshot.docs.first.id;
+        await _firestore.collection('users').doc(userId).update(user.toMap());
+
+        return user;
       }
+      return null;
+    } catch (e) {}
+  }
+
+  Future<UserModel?> editEntry(
+      String userEmail, String title, String category, double amount) async {
+    try {
+      // create a new entry with the updated values
+      EntryModel updatedEntry = EntryModel(
+        title: title,
+        category: category,
+        amount: amount,
+        date: DateTime.now(),
+      );
+
+      DocumentSnapshot userSnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: userEmail)
+          .limit(1)
+          .get()
+          .then((querySnapshot) => querySnapshot.docs.first);
+
+      if (userSnapshot.exists) {
+        UserModel user =
+            UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+
+        // find the entry with the specified title and update it
+        List<EntryModel> userEntries = user.entries;
+
+        print(userEntries);
+
+        int indexOfEntry =
+            userEntries.indexWhere((entry) => entry.title == title);
+
+        if (indexOfEntry != -1) {
+          userEntries[indexOfEntry] = updatedEntry;
+        } else {
+          // error ithay
+        }
+
+        user = user.copyWith(entries: userEntries);
+
+        // update the user document in Firestore
+        await _firestore
+            .collection('users')
+            .doc(userSnapshot.id)
+            .update(user.toMap());
+
+        return user;
+      }
+      return null;
     } catch (e) {
-      return [];
+      // Handle exceptions appropriately
+      print(e.toString());
+      return null;
     }
   }
 
-  Future<void> addEntry(String userId, EntryModel entry) async {
+  Future<UserModel?> deleteEntry(String userEmail, String title) async {
     try {
-      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+      DocumentSnapshot userSnapshot = await _firestore
           .collection('users')
-          .doc(userId)
-          .get();
+          .where('email', isEqualTo: userEmail)
+          .limit(1)
+          .get()
+          .then((querySnapshot) => querySnapshot.docs.first);
 
-      if (userDoc.exists) {
-        final UserModel user =
-            UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
-        user.entries.add(entry);
-        await FirebaseFirestore.instance
+      if (userSnapshot.exists) {
+        UserModel user =
+            UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+
+        // Find the entry with the specified title and remove it
+        List<EntryModel> userEntries = user.entries;
+        userEntries.removeWhere((entry) => entry.title == title);
+
+        user = user.copyWith(entries: userEntries);
+
+        // Update the user document in Firestore
+        await _firestore
             .collection('users')
-            .doc(userId)
+            .doc(userSnapshot.id)
             .update(user.toMap());
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
 
-  Future<void> deleteEntry(String userId, EntryModel entry) async {
-    try {
-      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
-
-      if (userDoc.exists) {
-        final UserModel user =
-            UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
-        user.entries.remove(entry);
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .update(user.toMap());
+        return user;
       }
+      return null;
     } catch (e) {
-      rethrow;
+      // Handle exceptions appropriately
+      print(e.toString());
+      return null;
     }
   }
 }

@@ -21,6 +21,7 @@ class EntryTile extends StatelessWidget {
         title: Text(title),
         subtitle: Text('Category: $category'),
         trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Rs. $amount'),
             Text('${date.day}/${date.month}/${date.year}'),

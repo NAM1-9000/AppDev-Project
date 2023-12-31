@@ -1,149 +1,94 @@
-// import 'package:expense_tracker/data/models/entry_model.dart';
-// import 'package:expense_tracker/presentation/widgets/form_field.dart';
-// import 'package:expense_tracker/stuff/database_services.dart';
-// import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
+import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/data/repositories/entry_repository.dart';
+import 'package:expense_tracker/presentation/widgets/form_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// class AddEntryScreen extends StatefulWidget {
-//   const AddEntryScreen({super.key});
+class AddEntryScreen extends StatelessWidget {
+  const AddEntryScreen({super.key});
 
-//   @override
-//   State<AddEntryScreen> createState() => _AddEntryScreenState();
-// }
+  @override
+  Widget build(BuildContext context) {
+    // controllers
+    TextEditingController titleController = TextEditingController();
+    TextEditingController categoryController = TextEditingController();
+    TextEditingController amountController = TextEditingController();
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/main');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        title: const Text('Add Entry'),
+      ),
+      body: SingleChildScrollView(
+        child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            print(amountController.text);
 
-// class _AddEntryScreenState extends State<AddEntryScreen> {
-//   String _selectedCategory = "Grocery";
-//   final TextEditingController _titleController = TextEditingController();
-//   final TextEditingController _amountController = TextEditingController();
-//   final TextEditingController _notesController = TextEditingController();
-//   final _databaseService = DatabaseService();
+            return Column(
+              children: [
+                SizedBox(height: 10),
+                // title
+                FormFieldWidget(
+                  hintText: 'Title',
+                  labelText: 'Title',
+                  inputType: TextInputType.text,
+                  controller: titleController,
+                ),
+                SizedBox(height: 10),
+                // category
+                FormFieldWidget(
+                  hintText: 'Category',
+                  labelText: 'Category',
+                  inputType: TextInputType.text,
+                  controller: categoryController,
+                ),
+                SizedBox(height: 10),
+                // amount
+                FormFieldWidget(
+                  hintText: 'Amount',
+                  labelText: 'Amount',
+                  inputType: TextInputType.number,
+                  controller: amountController,
+                ),
+                SizedBox(height: 10),
+                // add button
+                ElevatedButton(
+                  onPressed: () {
+                    double amount = double.parse(amountController.text);
+                    String title = titleController.text;
+                    String category = categoryController.text;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: PreferredSize(
-//         preferredSize: const Size.fromHeight(100),
-//         child: AppBar(
-//           title: Text(DateFormat('EEEE, d MMMM').format(DateTime.now())),
-//           bottom: const PreferredSize(
-//             preferredSize: Size.fromHeight(150),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 Text(
-//                   "42000",
-//                   style: TextStyle(fontSize: 30, color: Colors.white),
-//                 ),
-//                 Text("69420",
-//                     style: TextStyle(fontSize: 30, color: Colors.white)),
-//               ],
-//             ),
-//           ),
-//           centerTitle: true,
-//         ),
-//       ),
-//       // body: Padding(
-//       //   padding: const EdgeInsets.all(16.0),
-//       //   child: SingleChildScrollView(
-//       //     child: Column(
-//       //       mainAxisAlignment: MainAxisAlignment.center,
-//       //       children: [
-//       //         const SizedBox(
-//       //           height: 100,
-//       //         ),
-//       //         FormFieldWidget(
-//       //           controller: _titleController,
-//       //           hintText: 'Title',
-//       //           labelText: 'Title',
-//       //           inputType: TextInputType.text,
-//       //         ),
-//       //         const SizedBox(
-//       //           height: 10,
-//       //         ),
-//       //         FormFieldWidget(
-//       //           controller: _amountController,
-//       //           hintText: 'Amount',
-//       //           labelText: 'Amount',
-//       //           inputType: TextInputType.number,
-//       //         ),
-//       //         const SizedBox(
-//       //           height: 10,
-//       //         ),
-//       //         Container(
-//       //           width: double.infinity,
-//       //           clipBehavior: Clip.hardEdge,
-//       //           decoration: BoxDecoration(
-//       //             color: Colors.grey.withOpacity(.35),
-//       //             borderRadius: BorderRadius.circular(10),
-//       //           ),
-//       //           child: DropdownButtonFormField<String>(
-//       //             isExpanded: true,
-//       //             value: _selectedCategory,
-//       //             decoration: const InputDecoration(
-//       //               contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 0),
-//       //               labelText: 'Category',
-//       //               labelStyle: TextStyle(
-//       //                   color: Color.fromARGB(255, 80, 80, 80), fontSize: 20),
-//       //             ),
-//       //             style: const TextStyle(color: Colors.black),
-//       //             onChanged: (String? newValue) {
-//       //               setState(() {
-//       //                 _selectedCategory = newValue!;
-//       //               });
-//       //             },
-//       //             items: <String>[
-//       //               'Grocery',
-//       //               'Transport',
-//       //               'Bill',
-//       //               'Subscription',
-//       //               'Others'
-//       //             ].map<DropdownMenuItem<String>>((String value) {
-//       //               return DropdownMenuItem<String>(
-//       //                 value: value,
-//       //                 child: Text(value),
-//       //               );
-//       //             }).toList(),
-//       //           ),
-//       //         ),
-//       //         const SizedBox(
-//       //           height: 10,
-//       //         ),
-//       //         FormFieldWidget(
-//       //           controller: _notesController,
-//       //           numberOfLines: 4,
-//       //           hintText: 'Notes',
-//       //           labelText: 'Notes',
-//       //           inputType: TextInputType.multiline,
-//       //         ),
-//       //         const SizedBox(
-//       //           height: 10,
-//       //         ),
-//       //         const SizedBox(
-//       //           height: 10,
-//       //         ),
-//       //         Row(
-//       //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//       //           children: [
-//       //             ElevatedButton(
-//       //                 onPressed: () => Navigator.pushNamed(context, '/home'),
-//       //                 child: const Text("Cancel")),
-//       //             ElevatedButton(
-//       //                 onPressed: () => {
-//       //                       _databaseService.addEntry(EntryModel(
-//       //                           date: DateTime.now(),
-//       //                           title: _titleController.text,
-//       //                           amount: double.parse(_amountController.text),
-//       //                           category: _selectedCategory,
-//       //                           notes: _notesController.text)),
-//       //                       Navigator.pushNamed(context, '/home')
-//       //                     },
-//       //                 child: const Text("Confirm"))
-//       //           ],
-//       //         )
-//       //       ],
-//       //     ),
-//       //   ),
-//       // ),
-//     );
-//   }
-// }
+                    amountController.clear();
+                    categoryController.clear();
+                    titleController.clear();
+
+                    context.read<AddEntryCubit>().asyncaddEntry(
+                          email: (state as AuthSuccess).userModel.email,
+                          title: title,
+                          category: category,
+                          amount: amount,
+                        );
+
+                    // EntryRepository().addEntry(
+                    //   (state as AuthSuccess).userModel.email,
+                    //   title,
+                    //   category,
+                    //   amount,
+                    // );
+                    Navigator.pushReplacementNamed(context, '/main');
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

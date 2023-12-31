@@ -19,14 +19,24 @@ class SettingsBody extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
+            Divider(),
+            ListTile(
+              title: const Text('Set Monthly Budget'),
+              subtitle: const Text('Set your monthly budget'),
+              trailing: const Icon(Icons.arrow_forward),
+              onTap: () {},
+            ),
+            Divider(),
             // about list tile
             ListTile(
               title: const Text('About'),
               subtitle: const Text('Learn more about the app'),
               trailing: const Icon(Icons.arrow_forward),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/about');
+              },
             ),
-
+            Divider(),
             // logout list tile
             ListTile(
               title: const Text('Sign Out'),

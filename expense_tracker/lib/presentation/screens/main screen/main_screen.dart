@@ -24,48 +24,70 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow,
         title: Text(formattedDate),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // monthly spending
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  if (state is AuthSuccess) {
-                    return Text(
-                      "Rs. ${state.userModel.monthlySpending.toString()}",
-                      style: const TextStyle(fontSize: 24),
-                    );
-                  } else {
-                    return const Text(
-                      'Loading...',
-                      style: TextStyle(fontSize: 24),
-                    );
-                  }
-                },
+          preferredSize: const Size.fromHeight(50),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: const Color.fromARGB(255, 48, 48, 48),
               ),
-
-              // monthly budget
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  if (state is AuthSuccess) {
-                    return Text(
-                      "Rs. ${state.userModel.monthlyBudget.toString()}",
-                      style: const TextStyle(fontSize: 24),
-                    );
-                  } else {
-                    return const Text(
-                      'Loading...',
-                      style: TextStyle(fontSize: 24),
-                    );
-                  }
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Monthly Budget'),
+                        BlocBuilder<AuthCubit, AuthState>(
+                          builder: (context, state) {
+                            if (state is AuthSuccess) {
+                              return Text(
+                                "Rs. ${state.userModel.monthlyBudget.toString()}",
+                                style: const TextStyle(fontSize: 20),
+                              );
+                            } else {
+                              return const Text(
+                                'Loading...',
+                                style: TextStyle(fontSize: 20),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Monthly Spending'),
+                        // monthly spending
+                        BlocBuilder<AuthCubit, AuthState>(
+                          builder: (context, state) {
+                            if (state is AuthSuccess) {
+                              return Text(
+                                "Rs. ${state.userModel.monthlySpending.toString()}",
+                                style: const TextStyle(fontSize: 20),
+                              );
+                            } else {
+                              return const Text(
+                                'Loading...',
+                                style: TextStyle(fontSize: 20),
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -82,7 +104,9 @@ class _MainScreenState extends State<MainScreen> {
 
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, '/add_entry');
+        },
       ),
 
       // bottom navigation bar

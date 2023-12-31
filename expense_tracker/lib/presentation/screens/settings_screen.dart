@@ -24,7 +24,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Manage notification preferences'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Notification Settings tapped');
             },
           ),
@@ -34,7 +33,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Manage your account details'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Account Settings tapped');
             },
           ),
@@ -44,7 +42,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Customize the app theme'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Appearance tapped');
             },
           ),
@@ -54,7 +51,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: const Text('Manage privacy settings'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Add navigation logic or settings change logic here
               print('Privacy tapped');
             },
           ),
