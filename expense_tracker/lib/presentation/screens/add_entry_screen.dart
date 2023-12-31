@@ -24,14 +24,15 @@ class AddEntryScreen extends StatelessWidget {
         ),
         title: const Text('Add Entry'),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(8),
         child: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             print(amountController.text);
 
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
                 // title
                 FormFieldWidget(
                   hintText: 'Title',
@@ -39,7 +40,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.text,
                   controller: titleController,
                 ),
-                SizedBox(height: 10),
+                Divider(),
                 // category
                 FormFieldWidget(
                   hintText: 'Category',
@@ -47,7 +48,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.text,
                   controller: categoryController,
                 ),
-                SizedBox(height: 10),
+                Divider(),
                 // amount
                 FormFieldWidget(
                   hintText: 'Amount',
@@ -55,7 +56,7 @@ class AddEntryScreen extends StatelessWidget {
                   inputType: TextInputType.number,
                   controller: amountController,
                 ),
-                SizedBox(height: 10),
+                Divider(),
                 // add button
                 ElevatedButton(
                   onPressed: () {
