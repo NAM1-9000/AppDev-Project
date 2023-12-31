@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/theme/theme_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/theme/theme_state.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/presentation/screens/about_screen.dart';
 import 'package:expense_tracker/presentation/screens/add_entry_screen.dart';
@@ -23,7 +25,16 @@ void main() async {
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
   );
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AuthCubit()),
+        BlocProvider(create: (_) => AddEntryCubit()),
+        BlocProvider(create: (_) => ThemeCubit()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,28 +42,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => AuthCubit()),
-        BlocProvider(create: (_) => AddEntryCubit()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Expense Tracker',
-        theme: Pallete.darkModeAppTheme,
-        initialRoute: '/splash',
-        routes: {
-          '/splash': (context) => const SplashScreen(),
-          '/main': (context) => const MainScreen(),
-          '/login': (context) => const LoginScreen(),
-          '/signup': (context) => const SignupScreen(),
-          '/add_entry': (context) => const AddEntryScreen(),
-          //'/analytics': (context) => const AnalyticsScreen(),
-          '/settings': (context) => const SettingsScreen(),
-          '/about': (context) => const AboutScreen(),
-          //syncfusion
-        },
-      ),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (themeContext, themeState) {
+        ThemeData currentTheme = Pallete.lightModeAppTheme;
+        if (themeState is ThemeChanged) {
+          currentTheme = themeState.themeData;
+        }
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Expense Tracker',
+          theme: currentTheme, // Use the current theme from the ThemeCubit
+          initialRoute: '/splash',
+          routes: {
+            '/splash': (context) => const SplashScreen(),
+            '/main': (context) => const MainScreen(),
+            '/login': (context) => const LoginScreen(),
+            '/signup': (context) => const SignupScreen(),
+            '/add_entry': (context) => const AddEntryScreen(),
+            //'/analytics': (context) => const AnalyticsScreen(),
+            '/settings': (context) => const SettingsScreen(),
+            '/about': (context) => const AboutScreen(),
+            //syncfusion
+          },
+        );
+      },
     );
   }
 }

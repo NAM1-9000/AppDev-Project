@@ -1,24 +1,56 @@
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/theme/theme_cubit.dart'; // Import ThemeCubit
+import 'package:expense_tracker/business%20logic/cubits/theme/theme_state.dart';
+import 'package:expense_tracker/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsBody extends StatelessWidget {
-  const SettingsBody({super.key});
+  const SettingsBody({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    // about
-    // logout
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state is AuthInitial) {
-          Navigator.pop(context);
-          Navigator.pushReplacementNamed(context, '/login');
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        // Listener for AuthCubit
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthInitial) {
+              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/login');
+            }
+          },
+        ),
+        // Listener for ThemeCubit
+        BlocListener<ThemeCubit, ThemeState>(
+          listener: (context, state) {
+            if (state is ThemeChanged) {
+              print('Theme changed');
+            }
+          },
+        ),
+      ],
       child: Center(
         child: Column(
           children: [
+            Divider(),
+            ListTile(
+              title: const Text('Dark Mode'),
+              subtitle: const Text('Enable dark mode'),
+              trailing: Switch(
+                value: context.select((ThemeCubit themeCubit) {
+                  return themeCubit.state is ThemeChanged &&
+                      (themeCubit.state as ThemeChanged).themeData ==
+                          Pallete.darkModeAppTheme;
+                }),
+                onChanged: (value) {
+                  context.read<ThemeCubit>().toggleTheme(value);
+                },
+              ),
+              onTap: () {
+                print('Dark Mode tapped');
+              },
+            ),
             Divider(),
             ListTile(
               title: const Text('Set Monthly Budget'),
