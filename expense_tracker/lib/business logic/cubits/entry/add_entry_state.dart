@@ -11,6 +11,15 @@ final class AddEntryInitial extends AddEntryState {}
 
 final class AddEntryLoading extends AddEntryState {}
 
+final class AddEntriesLoaded extends AddEntryState {
+  final List<EntryModel> userEntries;
+
+  const AddEntriesLoaded({required this.userEntries});
+
+  @override
+  List<Object> get props => [userEntries];
+}
+
 final class AddEntrySuccess extends AddEntryState {
   final UserModel userModel;
 

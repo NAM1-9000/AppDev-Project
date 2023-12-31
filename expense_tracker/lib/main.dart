@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/theme/theme_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/theme/theme_state.dart';
 import 'package:expense_tracker/firebase_options.dart';
@@ -11,7 +11,6 @@ import 'package:expense_tracker/presentation/screens/main%20screen/main_screen.d
 import 'package:expense_tracker/presentation/screens/settings_screen.dart';
 import 'package:expense_tracker/presentation/screens/signup_screen.dart';
 import 'package:expense_tracker/presentation/screens/splash_screen.dart';
-import 'package:expense_tracker/presentation/screens/analytics_screen.dart';
 import 'package:expense_tracker/theme/pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

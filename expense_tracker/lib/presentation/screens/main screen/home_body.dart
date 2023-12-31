@@ -1,5 +1,5 @@
-import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/entry/add_entry_cubit.dart';
 import 'package:expense_tracker/data/models/entry_model.dart';
 import 'package:expense_tracker/presentation/widgets/entry_tile.dart';
 import 'package:flutter/material.dart';
@@ -94,10 +94,14 @@ class _HomeBodyState extends State<HomeBody> {
         });
   }
 
+  void fetchEntries(String userEmail) {
+    BlocProvider.of<AddEntryCubit>(context)
+        .asyncGetEntries(userEmail: userEmail);
+  }
+
   @override
   void initState() {
     super.initState();
-    print("Init state called");
   }
 
   @override
@@ -116,52 +120,57 @@ class _HomeBodyState extends State<HomeBody> {
       builder: (context, state) {
         if (state is AuthSuccess) {
           String userEmail = state.userModel.email;
-          List<EntryModel> entries = state.userModel.entries;
 
           return BlocConsumer<AddEntryCubit, AddEntryState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is AddEntriesLoaded) {
+                updatedUserEntres = state.userEntries;
+              }
+            },
             builder: (context, state) {
-              if (state is AddEntrySuccess) {
-                print(state);
-                updatedUserEntres = state.userModel.entries;
-                updateEntres(updatedUserEntres);
+              // fetch user's entries
+              if (state is AddEntryInitial) {
+                fetchEntries(userEmail);
               }
 
-              updatedUserEntres = entries;
+              if (state is AddEntrySuccess) {
+                fetchEntries(userEmail);
+              }
 
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  itemCount: entries.length,
-                  itemBuilder: (context, index) {
-                    if (updatedUserEntres != null) {
+              if (state is AddEntryLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (state is AddEntriesLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: state.userEntries.length,
+                    itemBuilder: (context, index) {
+                      EntryModel userEntry = state.userEntries[index];
+
                       return InkWell(
                         onTap: () {
                           _openEntryDialog(userEmail);
                         },
                         child: EntryTile(
-                          title: updatedUserEntres[index].title,
-                          category: updatedUserEntres[index].category,
-                          amount: updatedUserEntres[index].amount,
-                          date: updatedUserEntres[index].date,
+                          title: userEntry.title,
+                          category: userEntry.category,
+                          amount: userEntry.amount,
+                          date: userEntry.date,
                         ),
                       );
-                    } else {
-                      return EntryTile(
-                        title: entries[index].title,
-                        category: entries[index].category,
-                        amount: entries[index].amount,
-                        date: entries[index].date,
-                      );
-                    }
-                  },
-                ),
-              );
+                    },
+                  ),
+                );
+              }
+
+              return const SizedBox();
             },
           );
-        } else {
-          return const Center(child: CircularProgressIndicator());
         }
+
+        return const SizedBox();
       },
     );
   }

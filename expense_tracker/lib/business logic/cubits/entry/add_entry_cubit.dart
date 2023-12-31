@@ -11,6 +11,18 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   final EntryRepository _entryRepository = EntryRepository();
 
+  Future<void> asyncGetEntries({required String userEmail}) async {
+    emit(AddEntryLoading());
+
+    try {
+      List<EntryModel> userEntries =
+          await _entryRepository.getEntries(userEmail);
+      emit(AddEntriesLoaded(userEntries: userEntries));
+    } catch (error) {
+      emit(AddEntryFailed(message: error.toString()));
+    }
+  }
+
   void asyncaddEntry({
     required String email,
     required String title,

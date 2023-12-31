@@ -1,13 +1,16 @@
-import 'package:expense_tracker/business%20logic/cubits/add_entry/add_entry_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
-import 'package:expense_tracker/data/repositories/entry_repository.dart';
+import 'package:expense_tracker/business%20logic/cubits/entry/add_entry_cubit.dart';
 import 'package:expense_tracker/presentation/widgets/form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddEntryScreen extends StatelessWidget {
+class AddEntryScreen extends StatefulWidget {
   const AddEntryScreen({super.key});
+  State<AddEntryScreen> createState() => _AddEntryScreenState();
+}
 
+class _AddEntryScreenState extends State<AddEntryScreen> {
+  @override
   @override
   Widget build(BuildContext context) {
     // controllers
@@ -36,19 +39,58 @@ class AddEntryScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // title
-                FormFieldWidget(
-                  hintText: 'Title',
-                  labelText: 'Title',
-                  inputType: TextInputType.text,
-                  controller: titleController,
+                Container(
+                  child: FormFieldWidget(
+                    hintText: 'Title',
+                    labelText: 'Title',
+                    inputType: TextInputType.text,
+                    controller: titleController,
+                  ),
                 ),
                 SizedBox(height: 10),
                 // category
-                FormFieldWidget(
-                  hintText: 'Category',
-                  labelText: 'Category',
-                  inputType: TextInputType.text,
-                  controller: categoryController,
+                // FormFieldWidget(
+                //   hintText: 'Category',
+                //   labelText: 'Category',
+                //   inputType: TextInputType.text,
+                //   controller: categoryController,
+                // ),
+                SizedBox(height: 10),
+                Container(
+                  width: double.infinity,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.35),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    value: _selectedCategory,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 0),
+                      labelText: 'Category',
+                      labelStyle: TextStyle(
+                          color: Color.fromARGB(255, 80, 80, 80), fontSize: 20),
+                    ),
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedCategory = newValue!;
+                      });
+                    },
+                    items: <String>[
+                      'Grocery',
+                      'Transport',
+                      'Bill',
+                      'Subscription',
+                      'Others'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                 ),
                 SizedBox(height: 10),
                 // amount
@@ -64,7 +106,7 @@ class AddEntryScreen extends StatelessWidget {
                   onPressed: () {
                     double amount = double.parse(amountController.text);
                     String title = titleController.text;
-                    String category = categoryController.text;
+                    String category = _selectedCategory;
 
                     amountController.clear();
                     categoryController.clear();

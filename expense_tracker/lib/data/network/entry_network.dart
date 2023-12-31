@@ -5,6 +5,33 @@ import 'package:expense_tracker/data/models/user_model.dart';
 class EntryNetwork {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<List<EntryModel>> getEntries(String userEmail) async {
+    List<EntryModel> userEntries;
+
+    try {
+      // get user
+      DocumentSnapshot userSnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: userEmail)
+          .limit(1)
+          .get()
+          .then((querySnapshot) => querySnapshot.docs.first);
+
+      if (userSnapshot.exists) {
+        UserModel user =
+            UserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+
+        userEntries = user.entries;
+
+        return userEntries;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return [];
+  }
+
   Future<UserModel?> addEntry(
       String userEmail, String title, String category, double amount) async {
     try {

@@ -15,6 +15,21 @@ void main() {
     await loadAppFonts();
   });
 
+  testGoldens('Splash Screen Test', (tester) async {
+    const widget = MaterialApp(
+      home: SplashScreen(),
+    );
+
+    await tester.pumpWidgetBuilder(
+      widget,
+      surfaceSize: const Size(500, 1000),
+    );
+
+    // Wait for the asynchronous operation to complete
+    await tester.pumpAndSettle(const Duration(seconds: 3));
+
+    await screenMatchesGolden(tester, 'SplashScreen Screenshot');
+  });
   testGoldens('Login Screen Test', (tester) async {
     const widget = MaterialApp(
       home: LoginScreen(),
@@ -104,21 +119,5 @@ void main() {
     );
 
     await screenMatchesGolden(tester, 'AboutScreen Screenshot');
-  });
-
-  testGoldens('Splash Screen Test', (tester) async {
-    const widget = MaterialApp(
-      home: SplashScreen(),
-    );
-
-    await tester.pumpWidgetBuilder(
-      widget,
-      surfaceSize: const Size(500, 1000),
-    );
-
-    // Wait for the asynchronous operation to complete
-    await tester.pumpAndSettle(const Duration(seconds: 3));
-
-    await screenMatchesGolden(tester, 'SplashScreen Screenshot');
   });
 }
