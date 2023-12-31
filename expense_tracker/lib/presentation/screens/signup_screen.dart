@@ -89,6 +89,7 @@ class SignupScreen extends StatelessWidget {
                       return AuthScreensButton(
                         buttonLabel: 'Sign Up',
                         onPressed: () {
+                          FocusScope.of(context).unfocus();
                           context.read<AuthCubit>().emailPasswordSignUp(
                                 emailController.text,
                                 passwordController.text,

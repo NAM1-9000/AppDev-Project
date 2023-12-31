@@ -15,7 +15,7 @@ class AuthScreensButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Pallete.greyColor,
+        //backgroundColor: Pallete.greyColor,
         minimumSize: Size(
           double.infinity,
           MediaQuery.of(context).size.height * 0.06,

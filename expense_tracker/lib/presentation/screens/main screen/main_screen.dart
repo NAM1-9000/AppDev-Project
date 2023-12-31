@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: const Color.fromARGB(255, 48, 48, 48),
+                //color: const Color.fromARGB(255, 48, 48, 48),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(

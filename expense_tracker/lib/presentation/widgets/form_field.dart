@@ -40,13 +40,13 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.35),
+        //color: Colors.grey.withOpacity(.35),
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
         minLines: widget.isPasswordField == true ? null : widget.numberOfLines,
         maxLines: widget.isPasswordField == true ? 1 : widget.numberOfLines,
-        style: const TextStyle(color: Colors.black),
+        //style: const TextStyle(color: Colors.black),
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,
