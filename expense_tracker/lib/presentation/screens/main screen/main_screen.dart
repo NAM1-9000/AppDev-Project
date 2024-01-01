@@ -2,7 +2,7 @@ import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/analytics_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/home_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/settings_body.dart';
-import 'package:expense_tracker/theme/pallete.dart';
+import 'package:expense_tracker/utils/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

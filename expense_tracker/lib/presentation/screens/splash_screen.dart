@@ -1,4 +1,4 @@
-import 'package:expense_tracker/stuff/constants.dart';
+import 'package:expense_tracker/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

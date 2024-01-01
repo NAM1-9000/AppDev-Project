@@ -1,4 +1,3 @@
-import 'package:expense_tracker/theme/pallete.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreensButton extends StatelessWidget {

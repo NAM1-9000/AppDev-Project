@@ -11,7 +11,7 @@ import 'package:expense_tracker/presentation/screens/main%20screen/main_screen.d
 import 'package:expense_tracker/presentation/screens/settings_screen.dart';
 import 'package:expense_tracker/presentation/screens/signup_screen.dart';
 import 'package:expense_tracker/presentation/screens/splash_screen.dart';
-import 'package:expense_tracker/theme/pallete.dart';
+import 'package:expense_tracker/utils/pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

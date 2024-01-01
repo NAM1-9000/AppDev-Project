@@ -1,6 +1,6 @@
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/presentation/widgets/auth_screens_button.dart';
-import 'package:expense_tracker/stuff/constants.dart';
+import 'package:expense_tracker/utils/constants.dart';
 import 'package:expense_tracker/presentation/widgets/form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

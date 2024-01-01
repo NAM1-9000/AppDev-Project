@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:expense_tracker/business%20logic/cubits/theme/theme_state.dart';
-import 'package:expense_tracker/theme/pallete.dart';
+import 'package:expense_tracker/utils/pallete.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(ThemeInitial());

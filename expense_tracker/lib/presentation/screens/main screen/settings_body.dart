@@ -1,7 +1,7 @@
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
 import 'package:expense_tracker/business%20logic/cubits/theme/theme_cubit.dart'; // Import ThemeCubit
 import 'package:expense_tracker/business%20logic/cubits/theme/theme_state.dart';
-import 'package:expense_tracker/theme/pallete.dart';
+import 'package:expense_tracker/utils/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

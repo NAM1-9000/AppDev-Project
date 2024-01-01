@@ -20,7 +20,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
   late List<EntryModel>? _chartData;
   late List<PieChartData> processedData = [];
   late UserModel _authenticatedUser;
-  late List<EntryModel> _userEntries;
+  //late List<EntryModel> _userEntries;
 
   //get moc from firestore
   List<EntryModel> getChartData() {
@@ -99,7 +99,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
 
   @override
   Widget build(BuildContext context) {
-    List<EntryModel> rawData = getChartData();
+    //List<EntryModel> rawData = getChartData();
 
     return SafeArea(
       child: Scaffold(
