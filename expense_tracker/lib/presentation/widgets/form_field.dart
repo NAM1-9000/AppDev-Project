@@ -41,7 +41,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
       width: double.infinity,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.35),
+        //color: Colors.grey.withOpacity(.35),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Stack(

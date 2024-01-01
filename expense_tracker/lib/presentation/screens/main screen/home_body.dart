@@ -19,6 +19,8 @@ class _HomeBodyState extends State<HomeBody> {
   final categoryEditingController = TextEditingController();
   final amountEditingController = TextEditingController();
 
+  final String selectedCategory = "Grocery";
+
   void updateEntres(List<EntryModel> entries) {
     // setState(() {
     //   updatedUserEntres = entries;
@@ -29,7 +31,8 @@ class _HomeBodyState extends State<HomeBody> {
       String userEmail,
       TextEditingController titleController,
       TextEditingController categoryController,
-      TextEditingController amountController) {
+      TextEditingController amountController,
+      String selectedCategory) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -45,8 +48,33 @@ class _HomeBodyState extends State<HomeBody> {
                     labelText: 'Title',
                   ),
                 ),
-                TextField(
-                  controller: categoryController,
+                // TextField(
+                //   controller: categoryController,
+                //   decoration: const InputDecoration(
+                //     hintText: 'Category',
+                //     labelText: 'Category',
+                //   ),
+                // ),
+                DropdownButtonFormField<String>(
+                  value: categoryController.text,
+                  onChanged: (String? newValue) {
+                    // Handle the selection of the category
+                    setState(() {
+                      selectedCategory = newValue!;
+                    });
+                  },
+                  items: <String>[
+                    'Grocery',
+                    'Transport',
+                    'Bill',
+                    'Subscription',
+                    'Others'
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                   decoration: const InputDecoration(
                     hintText: 'Category',
                     labelText: 'Category',
@@ -81,7 +109,7 @@ class _HomeBodyState extends State<HomeBody> {
                   BlocProvider.of<AddEntryCubit>(context).asyncEditEntry(
                     email: userEmail,
                     title: titleEditingController.text,
-                    category: categoryEditingController.text,
+                    category: selectedCategory,
                     amount: double.parse(amountEditingController.text),
                   );
 
@@ -163,7 +191,8 @@ class _HomeBodyState extends State<HomeBody> {
                               userEmail,
                               titleEditingController,
                               categoryEditingController,
-                              amountEditingController);
+                              amountEditingController,
+                              selectedCategory);
                         },
                         child: EntryTile(
                           title: userEntry.title,

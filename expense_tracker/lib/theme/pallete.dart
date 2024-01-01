@@ -38,6 +38,16 @@ class Pallete {
   );
 
   static var lightModeAppTheme = ThemeData.light().copyWith(
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor:
+          greyColor.withOpacity(0.1), // Adjust opacity and color as needed
+      contentPadding: EdgeInsets.all(12), // Adjust padding as needed
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide.none,
+      ),
+    ),
     useMaterial3: true,
     scaffoldBackgroundColor: whiteColor,
     cardColor: blackColor,

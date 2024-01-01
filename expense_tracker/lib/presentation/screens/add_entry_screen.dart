@@ -49,7 +49,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                     controller: titleController,
                   ),
                 ),
-                SizedBox(height: 10),
+
                 // category
                 // FormFieldWidget(
                 //   hintText: 'Category',
@@ -57,44 +57,49 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                 //   inputType: TextInputType.text,
                 //   controller: categoryController,
                 // ),
-                SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.35),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    value: _selectedCategory,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 0),
-                      labelText: 'Category',
-                      labelStyle: TextStyle(
-                          color: Color.fromARGB(255, 80, 80, 80), fontSize: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Container(
+                    width: double.infinity,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    style: const TextStyle(color: Colors.black),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedCategory = newValue!;
-                      });
-                    },
-                    items: <String>[
-                      'Grocery',
-                      'Transport',
-                      'Bill',
-                      'Subscription',
-                      'Others'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                    child: Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          value: _selectedCategory,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            filled: true,
+                            contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 0),
+                            labelText: 'Category',
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedCategory = newValue!;
+                            });
+                          },
+                          items: <String>[
+                            'Grocery',
+                            'Transport',
+                            'Bill',
+                            'Subscription',
+                            'Others'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(height: 10),
+
                 // amount
                 FormFieldWidget(
                   hintText: 'Amount',
