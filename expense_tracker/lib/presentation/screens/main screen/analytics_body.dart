@@ -105,7 +105,7 @@ class _AnalyticsBodyState extends State<AnalyticsBody> {
       child: Scaffold(
         body: BlocBuilder<AddEntryCubit, AddEntryState>(
           builder: (context, state) {
-            print('state in build: $state');
+            //print('state in build: $state');
             if (state is AddEntriesLoaded) {
               _chartData = state.userEntries;
 

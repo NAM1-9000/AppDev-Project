@@ -19,6 +19,8 @@ class _HomeBodyState extends State<HomeBody> {
   final categoryEditingController = TextEditingController();
   final amountEditingController = TextEditingController();
 
+  double sum = 0.0;
+
   final String selectedCategory = "Grocery";
 
   void updateEntres(List<EntryModel> entries) {
@@ -41,6 +43,9 @@ class _HomeBodyState extends State<HomeBody> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Divider(
+                  color: Colors.transparent,
+                ),
                 TextField(
                   controller: titleController,
                   decoration: const InputDecoration(
@@ -55,6 +60,9 @@ class _HomeBodyState extends State<HomeBody> {
                 //     labelText: 'Category',
                 //   ),
                 // ),
+                Divider(
+                  color: Colors.transparent,
+                ),
                 DropdownButtonFormField<String>(
                   value: categoryController.text,
                   onChanged: (String? newValue) {
@@ -79,6 +87,9 @@ class _HomeBodyState extends State<HomeBody> {
                     hintText: 'Category',
                     labelText: 'Category',
                   ),
+                ),
+                Divider(
+                  color: Colors.transparent,
                 ),
                 TextField(
                   controller: amountController,
@@ -180,7 +191,7 @@ class _HomeBodyState extends State<HomeBody> {
                     itemCount: state.userEntries.length,
                     itemBuilder: (context, index) {
                       EntryModel userEntry = state.userEntries[index];
-
+                      sum = sum + userEntry.amount;
                       return InkWell(
                         onTap: () {
                           titleEditingController.text = userEntry.title;

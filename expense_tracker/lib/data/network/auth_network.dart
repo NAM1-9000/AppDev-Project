@@ -61,4 +61,11 @@ class AuthNetwork {
       throw Exception(e.message);
     }
   }
+
+  //bruh
+  Future<void> updateMonthlyBudget(String userId, double newBudget) async {
+    await _firestore.collection('users').doc(userId).update(
+      {'monthlyBudget': newBudget},
+    );
+  }
 }

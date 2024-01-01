@@ -1,4 +1,6 @@
 import 'package:expense_tracker/business%20logic/cubits/auth/auth_cubit.dart';
+import 'package:expense_tracker/business%20logic/cubits/entry/add_entry_cubit.dart';
+import 'package:expense_tracker/data/models/entry_model.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/analytics_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/home_body.dart';
 import 'package:expense_tracker/presentation/screens/main%20screen/settings_body.dart';
@@ -16,6 +18,32 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 1;
+  double sum = 0.0;
+  late String userEmail;
+
+// void fetchEntries(String userEmail) {
+//     BlocProvider.of<AddEntryCubit>(context)
+//         .asyncGetEntries(userEmail: userEmail);
+//   }
+
+  @override
+  void initState() {
+    super.initState();
+    final usercubit = BlocProvider.of<AuthCubit>(context);
+    if (usercubit.state is AuthSuccess) {
+      userEmail = (usercubit.state as AuthSuccess).userModel.email;
+      print(userEmail);
+      final entrycubit = BlocProvider.of<AddEntryCubit>(context);
+      //print(entrycubit.state);
+      if (entrycubit.state is AddEntryInitial) {
+        BlocProvider.of<AddEntryCubit>(context)
+            .asyncGetEntries(userEmail: userEmail);
+        if (entrycubit.state is AddEntriesLoaded) {
+          //print('niga');
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +82,41 @@ class _MainScreenState extends State<MainScreen> {
                                 Text('Spending',
                                     style: const TextStyle(fontSize: 18)),
                                 SizedBox(height: 10),
-                                // monthly spending
-                                BlocBuilder<AuthCubit, AuthState>(
-                                  builder: (context, state) {
-                                    if (state is AuthSuccess) {
-                                      return Text(
-                                        "Rs.${state.userModel.monthlySpending.toString()}",
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                        ),
-                                      );
-                                    } else {
-                                      return const Text(
-                                        'Loading...',
-                                        style: TextStyle(fontSize: 20),
-                                      );
+                                //monthly spending
+                                // BlocBuilder<AuthCubit, AuthState>(
+                                //   builder: (context, state) {
+                                //     if (state is AuthSuccess) {
+                                //       return Text(
+                                //         "Rs.${state.userModel.monthlySpending.toString()}",
+                                //         style: const TextStyle(
+                                //           fontSize: 24,
+                                //         ),
+                                //       );
+                                //     } else {
+                                //       return const Text(
+                                //         'Loading...',
+                                //         style: TextStyle(fontSize: 20),
+                                //       );
+                                //     }
+                                //   },
+                                // ),
+
+                                BlocConsumer<AddEntryCubit, AddEntryState>(
+                                    listener: (context, state) {
+                                  print(state);
+                                  if (state is AddEntriesLoaded) {
+                                    for (EntryModel entry
+                                        in state.userEntries) {
+                                      sum = sum + entry.amount;
+                                      print(sum);
                                     }
-                                  },
-                                ),
+                                  }
+                                }, builder: (context, state) {
+                                  return Text(
+                                    'Rs.$sum',
+                                    style: TextStyle(fontSize: 24),
+                                  );
+                                })
                               ],
                             ),
                           ],
